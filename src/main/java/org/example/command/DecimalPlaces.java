@@ -35,7 +35,7 @@ public class DecimalPlaces extends BotCommand {
                 .callbackData("four")
                 .build();
         InlineKeyboardButton backButton = InlineKeyboardButton.builder()
-                .text("Назад")
+                .text("Назад🔙")
                 .callbackData("command back")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
@@ -46,7 +46,7 @@ public class DecimalPlaces extends BotCommand {
                         Collections.singletonList(backButton)
                 ))
                 .build();
-        message.setText("Кількість знаків після коми: ");
+        message.setText("Кількість знаків після коми:");
         message.setReplyMarkup(keyboard);
         absSender.execute(message);
     }
