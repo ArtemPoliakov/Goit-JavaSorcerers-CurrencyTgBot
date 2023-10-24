@@ -5,7 +5,6 @@ import org.example.command.*;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
-
 import static org.example.telegram.BotConstants.BOT_NAME;
 import static org.example.telegram.BotConstants.BOT_TOKEN;
 
@@ -21,7 +20,6 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         register(new SettingsCommand());
         register(new StartCommand());
     }
-
     @Override
     public String getBotUsername() {
         return BOT_NAME;
