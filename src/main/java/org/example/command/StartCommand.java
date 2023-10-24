@@ -25,11 +25,11 @@ public class StartCommand extends BotCommand {
         message.setText(text);
         message.setChatId(chat.getId());
         InlineKeyboardButton buttonInfo = InlineKeyboardButton.builder()
-                .text("Отримати інфо")
+                .text("Отримати інфо📚")
                 .callbackData("info")
                 .build();
         InlineKeyboardButton buttonSettings = InlineKeyboardButton.builder()
-                .text("Налаштування")
+                .text("Налаштування⚙️")
                 .callbackData("settings")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()

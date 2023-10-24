@@ -23,23 +23,23 @@ public class SettingsCommand extends BotCommand {
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId());
         InlineKeyboardButton decimalPlaces = InlineKeyboardButton.builder()
-                .text("Кількість знаків після коми")
+                .text("Кількість знаків після коми✏️")
                 .callbackData("decimal places")
                 .build();
         InlineKeyboardButton bank = InlineKeyboardButton.builder()
-                .text("Банк")
+                .text("Банк💰")
                 .callbackData("bank")
                 .build();
         InlineKeyboardButton currency = InlineKeyboardButton.builder()
-                .text("Валюти")
+                .text("Валюти💲")
                 .callbackData("currency")
                 .build();
         InlineKeyboardButton alertTimes = InlineKeyboardButton.builder()
-                .text("Час оповіщень")
+                .text("Час оповіщень🔔")
                 .callbackData("alert times")
                 .build();
         InlineKeyboardButton back = InlineKeyboardButton.builder()
-                .text("Назад")
+                .text("Назад🔙")
                 .callbackData("back")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
