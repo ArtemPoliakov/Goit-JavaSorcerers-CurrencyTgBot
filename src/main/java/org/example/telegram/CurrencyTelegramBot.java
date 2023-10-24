@@ -6,6 +6,7 @@ import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingC
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
@@ -36,7 +37,6 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             }
         });
     }
-
     @Override
     public String getBotUsername() {
         return BOT_NAME;
