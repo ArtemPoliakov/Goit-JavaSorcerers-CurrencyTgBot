@@ -1,12 +1,16 @@
 package org.example.telegram;
 
 import lombok.SneakyThrows;
+import org.example.MessageProcessingAndSendingPart.BotMessageProcessor;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.command.*;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
@@ -15,9 +19,17 @@ import static org.example.telegram.BotConstants.BOT_NAME;
 import static org.example.telegram.BotConstants.BOT_TOKEN;
 
 public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
+    private static CurrencyTelegramBot instance;
     private final Pattern commandPattern = Pattern.compile("/\\w+");
 
-    public CurrencyTelegramBot() {
+    public static CurrencyTelegramBot getInstance() {
+        if (instance == null) {
+            instance = new CurrencyTelegramBot();
+        }
+        return instance;
+    }
+    @SneakyThrows
+    private CurrencyTelegramBot() {
         register(new HelpCommand());
         register(new AlertTimes());
         register(new BackCommand());
@@ -26,17 +38,10 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         register(new DecimalPlaces());
         register(new SettingsCommand());
         register(new StartCommand());
-        registerDefaultAction((absSender, message) -> {
-            SendMessage responseMessage = new SendMessage();
-            responseMessage.setText("Ви ввели команду який бот не може розпізнати🤷🏼‍♂️\n" + "Це бот знає ось такі команди: \n" + "/start ~ /help");
-            responseMessage.setChatId(message.getChatId());
-            try {
-                absSender.execute(responseMessage);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        register(new InfoButtonCommand());
+        registerDefaultAction(CurrencyTelegramBot::incorrectUserInput);
     }
+
     @Override
     public String getBotUsername() {
         return BOT_NAME;
@@ -88,5 +93,12 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
                 execute(responseMessage);
             }
         }
+    }
+    @SneakyThrows
+    private static void incorrectUserInput(AbsSender absSender, Message message) {
+        SendMessage responseMessage = new SendMessage();
+        responseMessage.setText("Ви ввели команду який бот не може розпізнати🤷🏼‍♂️\n" + "Це бот знає ось такі команди: \n" + "/start ~ /help");
+        responseMessage.setChatId(message.getChatId());
+        absSender.execute(responseMessage);
     }
 }

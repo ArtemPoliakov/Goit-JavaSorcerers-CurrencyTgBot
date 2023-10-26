@@ -24,7 +24,7 @@ public class BankCommand extends BotCommand {
         message.setChatId(chat.getId());
         InlineKeyboardButton buttonNby = InlineKeyboardButton.builder()
                 .text("НБУ")
-                .callbackData("Nby") //поки так
+                .callbackData("Nby")
                 .build();
         InlineKeyboardButton buttonPrivatBank = InlineKeyboardButton.builder()
                 .text("ПриватБанк")
