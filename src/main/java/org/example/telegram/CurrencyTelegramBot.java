@@ -1,8 +1,6 @@
 package org.example.telegram;
 
 import lombok.SneakyThrows;
-import org.example.MessageProcessingAndSendingPart.BotMessageProcessor;
-import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.command.*;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,10 +13,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
 
-import static org.example.BotConstants.BOT_NAME;
-import static org.example.BotConstants.BOT_TOKEN;
-//import static org.example.telegram.BotConstants.BOT_NAME;
-//import static org.example.telegram.BotConstants.BOT_TOKEN;
+import static org.example.telegram.BotConstants.BOT_NAME;
+import static org.example.telegram.BotConstants.BOT_TOKEN;
 
 public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
     private static CurrencyTelegramBot instance;
@@ -41,6 +37,7 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         register(new SettingsCommand());
         register(new StartCommand());
         register(new InfoButtonCommand());
+        register(new SignsAfterComaCommand());
         registerDefaultAction(CurrencyTelegramBot::incorrectUserInput);
     }
 
@@ -61,28 +58,33 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         if (update.hasCallbackQuery()) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
             String action = callbackQuery.getData();
-            if ("settings".equals(action)) {
+            String[] data = action.split("_");
+            if ("settings".equals(data[0])) {
                 SettingsCommand settingsCommand = new SettingsCommand();
                 settingsCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("back".equals(action)) {
+            } else if ("back".equals(data[0])) {
                 BankCommand bankCommand = new BankCommand();
                 bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("decimal places".equals(action)) {
-                DecimalPlaces decimalPlacesCommand = new DecimalPlaces();
-                decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("bank".equals(action)) {
+            } else if ("signsAfterComa".equals(data[0])) {
+                SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1]);
+                signsAfterComaCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if ("bank".equals(data[0])) {
                 BankCommand bankCommand = new BankCommand();
                 bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("alert times".equals(action)) {
+            } else if ("alert times".equals(data[0])) {
                 AlertTimes alertTimesCommand = new AlertTimes();
                 alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if("info".equals(action)){
+            } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if ("decimal places".equals(data[0])){
+                DecimalPlaces decimalPlacesCommand = new DecimalPlaces();
+                decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             }
         }
         commandHelp(update);
     }
+
 
     private void commandHelp(Update update) throws TelegramApiException {
         if (update.hasMessage() && update.getMessage().hasText()) {
