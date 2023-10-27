@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.example.MessageProcessingAndSendingPart.BotUser;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Database {

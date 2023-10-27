@@ -15,8 +15,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
 
-import static org.example.telegram.BotConstants.BOT_NAME;
-import static org.example.telegram.BotConstants.BOT_TOKEN;
+import static org.example.BotConstants.BOT_NAME;
+import static org.example.BotConstants.BOT_TOKEN;
+//import static org.example.telegram.BotConstants.BOT_NAME;
+//import static org.example.telegram.BotConstants.BOT_TOKEN;
 
 public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
     private static CurrencyTelegramBot instance;
@@ -74,6 +76,9 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if ("alert times".equals(action)) {
                 AlertTimes alertTimesCommand = new AlertTimes();
                 alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("info".equals(action)){
+                InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
+                infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             }
         }
         commandHelp(update);
