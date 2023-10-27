@@ -16,10 +16,10 @@ public class Bank {
     @Getter
     @AllArgsConstructor
     public enum BankName {
-        MONO("Monobank rates:"),
-        PRIVAT("Privatbank rates:"),
-        NBU("NBU rates:"),
-        UNDEFINED_BANK("Unexpected bank");
+        MONO("_Monobank rates:_"),
+        PRIVAT("_Privatbank rates:_"),
+        NBU("_NBU rates:_"),
+        UNDEFINED_BANK("*Unexpected bank*");
 
         private final String message;
     }
