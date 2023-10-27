@@ -48,10 +48,11 @@ public class Client {
         executorService.scheduleAtFixedRate(this::updateAllBanks, 0, 5, TimeUnit.MINUTES);
     }
 
+    //TODO: bug check
     private void updateAllBanks() {
-        banks.get(BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList());
-        banks.get(BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList());
-        banks.get(BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList());
+       CompletableFuture.runAsync(()->banks.get(BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(()->banks.get(BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(()->banks.get(BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList()));
     }
 
     public List<Currency> getMonoBankCurrentCurrencyList() {

@@ -48,18 +48,22 @@ public class BotMessageProcessor {
         sendMessage.setText(messageText);
         instance.execute(sendMessage);
     }
-    public String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
+    private String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
         StringBuilder builder = new StringBuilder();
         for(Bank.BankName bankName: banksData.keySet()){
             if(botUser.getBanksMap().get(bankName)){
                 builder.append(bankName.getMessage()+"\n");
-                for(Currency currency: banksData.get(bankName).getCurrencyList()){
-                    if(botUser.getCurrenciesMap().get(currency.getCurrencyName())){
-                        builder.append(currency.getCurrencyName().getMessage()+"\n");
-                        int signsAfterComma = botUser.getSignsAfterComma();
-                        builder.append("Buy: "+ getUserFitAmount(currency.getBuyPrice(), signsAfterComma,amount)+"\n");
-                        builder.append("Sell: "+getUserFitAmount(currency.getSellPrice(), signsAfterComma, amount)+"\n");
+                if(banksData.get(bankName).getCurrencyList()!=null) {
+                    for (Currency currency : banksData.get(bankName).getCurrencyList()) {
+                        if (botUser.getCurrenciesMap().get(currency.getCurrencyName())) {
+                            builder.append(currency.getCurrencyName().getMessage() + "\n");
+                            int signsAfterComma = botUser.getSignsAfterComma();
+                            builder.append("Buy: " + getUserFitAmount(currency.getBuyPrice(), signsAfterComma, amount) + "\n");
+                            builder.append("Sell: " + getUserFitAmount(currency.getSellPrice(), signsAfterComma, amount) + "\n");
+                        }
                     }
+                } else{
+                    builder.append("ERROR: operation refused by bank");
                 }
                 builder.append("\n");
             }
