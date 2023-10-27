@@ -24,7 +24,7 @@ public class SettingsCommand extends BotCommand {
         message.setChatId(chat.getId());
         InlineKeyboardButton decimalPlaces = InlineKeyboardButton.builder()
                 .text("Кількість знаків після коми✏️")
-                .callbackData("decimal places")
+                .callbackData("signsAfterComa")
                 .build();
         InlineKeyboardButton bank = InlineKeyboardButton.builder()
                 .text("Банк💰")
