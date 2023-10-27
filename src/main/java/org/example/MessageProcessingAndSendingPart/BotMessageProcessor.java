@@ -1,9 +1,11 @@
 package org.example.MessageProcessingAndSendingPart;
 
 
+import lombok.SneakyThrows;
 import org.example.app.Client;
 import org.example.bank.Bank;
 import org.example.bank.Currency;
+import org.example.telegram.CurrencyTelegramBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -22,12 +24,12 @@ public class BotMessageProcessor {
         Thread.sleep(4000);
         new BotMessageProcessor().sendMessageToUser(BotUser.newDefaultUserById(2L), client.getBanks(), 1);
     }
+    @SneakyThrows
     public void sendMessageToUser(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
         String messageText = buildMessageText(botUser, banksData, amount);
         System.out.println(messageText);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(botUser.getUserChatId());
-        sendMessage.setText(messageText);
         InlineKeyboardButton buttonInfo = InlineKeyboardButton.builder()
                 .text("Отримати інфо📚")
                 .callbackData("info")
@@ -42,9 +44,11 @@ public class BotMessageProcessor {
                 ))
                 .build();
         sendMessage.setReplyMarkup(keyboard);
-        //TODO: add sending logic
+        CurrencyTelegramBot instance = CurrencyTelegramBot.getInstance();
+        sendMessage.setText(messageText);
+        instance.execute(sendMessage);
     }
-    private String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
+    public String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
         StringBuilder builder = new StringBuilder();
         for(Bank.BankName bankName: banksData.keySet()){
             if(botUser.getBanksMap().get(bankName)){
