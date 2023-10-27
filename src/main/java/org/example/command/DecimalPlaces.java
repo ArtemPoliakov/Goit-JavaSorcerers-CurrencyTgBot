@@ -1,6 +1,7 @@
 package org.example.command;
 
 import lombok.SneakyThrows;
+import org.example.command.decimal_places.ButtonCommandTwo;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -24,7 +25,7 @@ public class DecimalPlaces extends BotCommand {
         message.setChatId(chat.getId());
         InlineKeyboardButton twoDecimal = InlineKeyboardButton.builder()
                 .text("2")
-                .callbackData("two")
+                .callbackData(new ButtonCommandTwo().getCommandIdentifier())
                 .build();
         InlineKeyboardButton threeDecimal = InlineKeyboardButton.builder()
                 .text("3")
