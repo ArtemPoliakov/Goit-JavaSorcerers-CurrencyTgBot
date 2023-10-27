@@ -46,6 +46,7 @@ public class BotMessageProcessor {
         sendMessage.setReplyMarkup(keyboard);
         CurrencyTelegramBot instance = CurrencyTelegramBot.getInstance();
         sendMessage.setText(messageText);
+        sendMessage.setParseMode("markdown");
         instance.execute(sendMessage);
     }
     private String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){

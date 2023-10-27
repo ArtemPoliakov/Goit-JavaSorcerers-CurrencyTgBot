@@ -15,9 +15,9 @@ public class Currency {
     @Getter
     @AllArgsConstructor
     public enum CurrencyName {
-        USD("USD:"),
-        EUR("EUR:"),
-        UNDEFINED("Unexpected currency");
+        USD("*USD*:"),
+        EUR("*EUR*:"),
+        UNDEFINED("*Unexpected currency*");
 
         private final String message;
     }
