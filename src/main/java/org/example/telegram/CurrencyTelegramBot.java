@@ -2,6 +2,9 @@ package org.example.telegram;
 
 import lombok.SneakyThrows;
 import org.example.command.*;
+import org.example.command.timeAndZone.AlertTimes;
+import org.example.command.timeAndZone.TimeAndZoneCommand;
+import org.example.command.timeAndZone.ZoneCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -39,6 +42,8 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         register(new StartCommand());
         register(new InfoButtonCommand());
         register(new SignsAfterComaCommand());
+        register((new TimeAndZoneCommand()));
+        register(new ZoneCommand());
         registerDefaultAction(CurrencyTelegramBot::incorrectUserInput);
     }
 
@@ -72,15 +77,22 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if ("bank".equals(data[0])) {
                 BankCommand bankCommand = new BankCommand();
                 bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("alert times".equals(data[0])) {
-                AlertTimes alertTimesCommand = new AlertTimes();
-                alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("signsAfterComa".equals(data[0])){
                 DecimalPlaces decimalPlacesCommand = new DecimalPlaces();
                 decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            }else if ("alert times".equals(data[0])) {
+                AlertTimes alertTimesCommand = new AlertTimes();
+                alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("TimeAndZone".equals(data[0])){
+                TimeAndZoneCommand timeAndZoneCommand = new TimeAndZoneCommand();
+                timeAndZoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("zone".equals(data[0])){
+                ZoneCommand zoneCommand = new ZoneCommand();
+                zoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+
             }
         }
         commandHelp(update);

@@ -34,9 +34,9 @@ public class SettingsCommand extends BotCommand {
                 .text("Валюти💲")
                 .callbackData("currency")
                 .build();
-        InlineKeyboardButton alertTimes = InlineKeyboardButton.builder()
-                .text("Час оповіщень🔔")
-                .callbackData("alert times")
+        InlineKeyboardButton timeAndZone = InlineKeyboardButton.builder()
+                .text("Час та часовий пояс🔔\uD83C\uDF0E")
+                .callbackData("TimeAndZone")
                 .build();
         InlineKeyboardButton back = InlineKeyboardButton.builder()
                 .text("Назад🔙")
@@ -47,7 +47,7 @@ public class SettingsCommand extends BotCommand {
                         Collections.singletonList(decimalPlaces),
                         Collections.singletonList(bank),
                         Collections.singletonList(currency),
-                        Collections.singletonList(alertTimes),
+                        Collections.singletonList(timeAndZone),
                         Collections.singletonList(back)
                 ))
                 .build();

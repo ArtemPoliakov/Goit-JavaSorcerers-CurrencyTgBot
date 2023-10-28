@@ -1,4 +1,4 @@
-package org.example.command;
+package org.example.command.timeAndZone;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
