@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TimeAndZoneCommand extends BotCommand {
     public TimeAndZoneCommand(){
-        super("timeAndZone", "Time and zone command");
+        super("TimeAndZone", "Time and zone command");
     }
     @SneakyThrows
     @Override
@@ -27,6 +27,7 @@ public class TimeAndZoneCommand extends BotCommand {
         InlineKeyboardButton zone = InlineKeyboardButton
                 .builder()
                 .text("Часовий пояс\uD83C\uDF0E")
+                .callbackData("zone")
                 .build();
         InlineKeyboardButton backButton = InlineKeyboardButton.builder()
                 .text("Назад🔙")
@@ -35,7 +36,10 @@ public class TimeAndZoneCommand extends BotCommand {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         buttons.add(List.of(time, zone));
         buttons.add(List.of(backButton));
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup(buttons);
+        InlineKeyboardMarkup markup = InlineKeyboardMarkup
+                .builder()
+                .keyboard(buttons)
+                .build();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText("Оберіть налаштування:");
         sendMessage.setChatId(chat.getId());

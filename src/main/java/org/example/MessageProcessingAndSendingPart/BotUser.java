@@ -62,11 +62,11 @@ public class BotUser {
     }
     public void setTimeZone(int timeZone){
         this.timeZone = timeZone;
-        if(executor.isShutdown()){
-            return;
-        }else {
-            killUserSendingProcess(executor);
-            invokeSendingProcess();
+        if(executor!=null) {
+            if (!executor.isShutdown()) {
+                killUserSendingProcess(executor);
+                invokeSendingProcess();
+            }
         }
     }
     public void setBankNeedByName(Bank.BankName name, Boolean need){

@@ -2,9 +2,12 @@ package org.example.telegram;
 
 import lombok.SneakyThrows;
 import org.example.command.*;
+import org.example.command.bankTgLogics.BankSelectionCommand;
+import org.example.command.bankTgLogics.BanksCommand;
 import org.example.command.timeAndZone.AlertTimes;
 import org.example.command.timeAndZone.TimeAndZoneCommand;
 import org.example.command.timeAndZone.ZoneCommand;
+import org.example.command.timeAndZone.ZoneResetCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -35,15 +38,17 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
         register(new HelpCommand());
         register(new AlertTimes());
         register(new BackCommand());
-        register(new BankCommand());
+        register(new BanksCommand());
         register(new CurrencyCommand());
         register(new DecimalPlaces());
         register(new SettingsCommand());
         register(new StartCommand());
         register(new InfoButtonCommand());
         register(new SignsAfterComaCommand());
-        register((new TimeAndZoneCommand()));
+        register(new TimeAndZoneCommand());
         register(new ZoneCommand());
+        register(new ZoneResetCommand());
+        register(new BankSelectionCommand());
         registerDefaultAction(CurrencyTelegramBot::incorrectUserInput);
     }
 
@@ -69,14 +74,14 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
                 SettingsCommand settingsCommand = new SettingsCommand();
                 settingsCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("back".equals(data[0])) {
-                BankCommand bankCommand = new BankCommand();
-                bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+                BanksCommand banksCommand = new BanksCommand();
+                banksCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("decimalPlaces".equals(data[0])) {
                 SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1], update);
                 signsAfterComaCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("bank".equals(data[0])) {
-                BankCommand bankCommand = new BankCommand();
-                bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+                BanksCommand banksCommand = new BanksCommand();
+                banksCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
@@ -92,7 +97,12 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if("zone".equals(data[0])){
                 ZoneCommand zoneCommand = new ZoneCommand();
                 zoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-
+            } else if("zoneResetCommand".equals(data[0])){
+                ZoneResetCommand zoneResetCommand = new ZoneResetCommand(data[1], update);
+                zoneResetCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("bankSelection".equals(data[0])){
+                BankSelectionCommand bankSelectionCommand = new BankSelectionCommand(data[1], update);
+                bankSelectionCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             }
         }
         commandHelp(update);

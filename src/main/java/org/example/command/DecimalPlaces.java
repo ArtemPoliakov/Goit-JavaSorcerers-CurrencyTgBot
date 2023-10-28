@@ -34,7 +34,7 @@ public class DecimalPlaces extends BotCommand {
     public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser){
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         for (int i = 2; i < 5; i++) {
-            String text = botUser.getSignsAfterComma()==i? i + " ✅" : String.valueOf(i);
+            String text = botUser.getSignsAfterComma()==i? "✅ " + i : String.valueOf(i);
             InlineKeyboardButton button = InlineKeyboardButton.builder()
                     .text(String.valueOf(text))
                     .callbackData("decimalPlaces_" + i)
