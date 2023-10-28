@@ -13,8 +13,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
 
-import static org.example.telegram.BotConstants.BOT_NAME;
-import static org.example.telegram.BotConstants.BOT_TOKEN;
+import static org.example.BotConstants.BOT_NAME;
+import static org.example.BotConstants.BOT_TOKEN;
+
 
 public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
     private static CurrencyTelegramBot instance;
@@ -65,8 +66,8 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if ("back".equals(data[0])) {
                 BankCommand bankCommand = new BankCommand();
                 bankCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("signsAfterComa".equals(data[0])) {
-                SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1]);
+            } else if ("decimalPlaces".equals(data[0])) {
+                SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1], update);
                 signsAfterComaCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("bank".equals(data[0])) {
                 BankCommand bankCommand = new BankCommand();
@@ -77,7 +78,7 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("decimal places".equals(data[0])){
+            } else if ("signsAfterComa".equals(data[0])){
                 DecimalPlaces decimalPlacesCommand = new DecimalPlaces();
                 decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             }

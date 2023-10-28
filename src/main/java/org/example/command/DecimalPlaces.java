@@ -1,9 +1,12 @@
 package org.example.command;
 
 import lombok.SneakyThrows;
+import org.example.MessageProcessingAndSendingPart.BotUser;
+import org.example.app.Database;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -20,14 +23,21 @@ public class DecimalPlaces extends BotCommand {
     @Override
     @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+        BotUser botUser = Database.getUserById(chat.getId());
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId());
-
+        message.setText("Кількість знаків після коми:");
+        InlineKeyboardMarkup keyboard = getInlineKeyboardMarkup(botUser);
+        message.setReplyMarkup(keyboard);
+        absSender.execute(message);
+    }
+    public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser){
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         for (int i = 2; i < 5; i++) {
+            String text = botUser.getSignsAfterComma()==i? i + " ✅" : String.valueOf(i);
             InlineKeyboardButton button = InlineKeyboardButton.builder()
-                    .text(String.valueOf(i))
-                    .callbackData("decimal places_" + i)
+                    .text(String.valueOf(text))
+                    .callbackData("decimalPlaces_" + i)
                     .build();
             buttons.add(List.of(button));
         }
@@ -36,11 +46,9 @@ public class DecimalPlaces extends BotCommand {
                 .callbackData("command back")
                 .build();
         buttons.add(List.of(backButton));
-        message.setText("Кількість знаків після коми:");
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
                 .keyboard(buttons)
-                        .build();
-        message.setReplyMarkup(keyboard);
-        absSender.execute(message);
+                .build();
+        return keyboard;
     }
 }
