@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.example.bank.Bank;
-import org.example.command.timeAndZone.ZoneCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
