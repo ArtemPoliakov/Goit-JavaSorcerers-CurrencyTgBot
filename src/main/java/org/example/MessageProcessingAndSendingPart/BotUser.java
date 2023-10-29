@@ -57,7 +57,11 @@ public class BotUser {
         return botUser;
     }
 
+
     public void setTimeOfSending(int timeOfSending) {
+
+    public void setTimeOfSending(int timeOfSending){
+
         killUserSendingProcess();
         this.timeOfSending = timeOfSending;
         invokeSendingProcess();
@@ -81,10 +85,17 @@ public class BotUser {
         currenciesMap.put(name, need);
     }
 
+
     public void killUserSendingProcess() {
         timeOfSending = -1;
         if (executor != null) {
             if (!executor.isShutdown()) {
+
+    public void killUserSendingProcess(){
+        timeOfSending = -1;
+        if(executor!=null){
+            if(!executor.isShutdown()){
+
                 executor.shutdownNow();
             }
         }
