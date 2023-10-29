@@ -3,7 +3,7 @@ package org.example.command.currancyCommandLogic;
 import lombok.SneakyThrows;
 import org.example.app.Database;
 import org.example.bank.Currency;
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;

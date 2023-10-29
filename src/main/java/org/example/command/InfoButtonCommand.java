@@ -1,8 +1,8 @@
 package org.example.command;
 
 import lombok.SneakyThrows;
-import org.example.messageProcessingAndSendingPart.BotMessageProcessor;
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotMessageProcessor;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Client;
 import org.example.app.Database;
 import org.example.bank.Bank;

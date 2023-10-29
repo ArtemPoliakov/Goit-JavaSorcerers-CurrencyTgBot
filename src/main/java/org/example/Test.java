@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 
 public class Test {

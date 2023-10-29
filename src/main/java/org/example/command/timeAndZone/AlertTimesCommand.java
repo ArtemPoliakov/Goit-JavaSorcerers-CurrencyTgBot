@@ -1,7 +1,7 @@
 package org.example.command.timeAndZone;
 
 import lombok.SneakyThrows;
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.example.projectUtils.UtilMethods;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;

@@ -1,7 +1,7 @@
 package org.example.command;
 
 import lombok.SneakyThrows;
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;

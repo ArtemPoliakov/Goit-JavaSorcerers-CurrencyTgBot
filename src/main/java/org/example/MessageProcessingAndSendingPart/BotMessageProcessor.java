@@ -1,4 +1,4 @@
-package org.example.messageProcessingAndSendingPart;
+package org.example.MessageProcessingAndSendingPart;
 
 
 import lombok.SneakyThrows;

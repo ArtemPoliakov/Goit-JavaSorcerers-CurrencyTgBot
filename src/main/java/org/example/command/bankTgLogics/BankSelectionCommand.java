@@ -1,7 +1,7 @@
 package org.example.command.bankTgLogics;
 
 import lombok.SneakyThrows;
-import org.example.messageProcessingAndSendingPart.BotUser;
+import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.example.bank.Bank;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
