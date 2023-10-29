@@ -15,40 +15,43 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZoneCommand extends BotCommand {
-    public ZoneCommand() {
-        super("ZoneCommand", "Command for timezone management");
+public class AlertTimesCommand extends BotCommand {
+    public AlertTimesCommand() {
+        super("alert times", "Час оповіщень");
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat.getId());
-        sendMessage.setText("Оберіть свій часовий пояс:");
+        sendMessage.setText("Оберіть час розсилки повідомлень:");
         sendMessage.setReplyMarkup(getInlineKeyboardMarkup(botUser));
         absSender.execute(sendMessage);
     }
 
     public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser) {
-        String[] zones = new String[]{"+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11",
-                "+12", "-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-12"};
+        String[] times = new String[]{"9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         int counter = 0;
-        while (counter < zones.length) {
+        while (counter < times.length) {
             List<InlineKeyboardButton> row = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
-                String s = zones[counter];
-                int intEquivalent = Integer.parseInt(s.replace("+", ""));
+                String txt = times[counter];
+                int intEquivalent = Integer.parseInt(txt);
                 row.add(UtilMethods.createButton(
-                        botUser.getTimeZone() == intEquivalent ? "✅ " + s : s,
-                        "zoneResetCommand_" + intEquivalent));
+                        botUser.getTimeOfSending() == intEquivalent ? "✅ " + txt : txt,
+                        "alertTimesCommand_" + intEquivalent));
                 counter++;
             }
             buttons.add(row);
         }
+        buttons.add(List.of(UtilMethods.createButton
+                (botUser.isProcessActive() ? "Вимкнути сповіщення🔕" : "✅ Вимкнути сповіщення🔕", "turnOff")));
         buttons.add(List.of(UtilMethods.createButton("Назад🔙", "command back")));
-        return InlineKeyboardMarkup.builder().keyboard(buttons).build();
+        return InlineKeyboardMarkup.builder()
+                .keyboard(buttons)
+                .build();
     }
 }

@@ -1,46 +1,46 @@
 package org.example.command;
 
 import lombok.SneakyThrows;
+import org.example.command.timeAndZone.AlertTimesCommand;
 import org.example.messageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
+
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-public class SignsAfterComaCommand extends BotCommand {
+public class TurnOffCommand extends BotCommand {
     private Update update;
-    private String signsAfterComa;
 
-    public SignsAfterComaCommand(String signsAfterComa, Update update) {
+
+    public TurnOffCommand(Update update) {
         this();
-        this.signsAfterComa = signsAfterComa;
         this.update = update;
+
     }
 
-    public SignsAfterComaCommand() {
-        super("decimal places", "Кількість знаків після коми:");
+    public TurnOffCommand() {
+        super("turnOff", "Вимкнути сповіщення🔕");
     }
 
     @Override
     @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
-        int quantity = Integer.parseInt(signsAfterComa);
-        botUser.setSignsAfterComma(quantity);
+        botUser.killUserSendingProcess();
 
         int messageId = update.getCallbackQuery().getMessage().getMessageId();
-        long chatId = chat.getId();
-        DecimalPlaces dp = new DecimalPlaces();
-        InlineKeyboardMarkup inlineKeyboardMarkup = dp.getInlineKeyboardMarkup(botUser);
-        EditMessageReplyMarkup edit = EditMessageReplyMarkup.builder()
-                .chatId(chatId)
-                .messageId(messageId)
+        AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
+        InlineKeyboardMarkup inlineKeyboardMarkup = alertTimesCommand.getInlineKeyboardMarkup(botUser);
+        EditMessageReplyMarkup editMessageReplyMarkup = EditMessageReplyMarkup.builder()
                 .replyMarkup(inlineKeyboardMarkup)
+                .messageId(messageId)
+                .chatId(chat.getId())
                 .build();
-        absSender.execute(edit);
+        absSender.execute(editMessageReplyMarkup);
     }
 }

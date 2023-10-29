@@ -1,9 +1,8 @@
 package org.example.command.timeAndZone;
 
 import lombok.SneakyThrows;
-import org.example.MessageProcessingAndSendingPart.BotUser;
+import org.example.messageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
-import org.example.command.DecimalPlaces;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -15,14 +14,17 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public class ZoneResetCommand extends BotCommand {
     private Update update;
     private int zone;
-    public ZoneResetCommand(String zone, Update update){
+
+    public ZoneResetCommand(String zone, Update update) {
         this();
         this.update = update;
         this.zone = Integer.parseInt(zone);
     }
-    public ZoneResetCommand(){
+
+    public ZoneResetCommand() {
         super("zoneResetCommand", "Command for processing digit buttons of timezone");
     }
+
     @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
