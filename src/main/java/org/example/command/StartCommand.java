@@ -24,6 +24,11 @@ public class StartCommand extends BotCommand {
         SendMessage message = new SendMessage();
         message.setText(text);
         message.setChatId(chat.getId());
+
+        message.setReplyMarkup(getInlineKeyboardMarkup());
+        absSender.execute(message);
+    }
+    public InlineKeyboardMarkup getInlineKeyboardMarkup(){
         InlineKeyboardButton buttonInfo = InlineKeyboardButton.builder()
                 .text("Отримати інфо📚")
                 .callbackData("info")
@@ -32,12 +37,10 @@ public class StartCommand extends BotCommand {
                 .text("Налаштування⚙️")
                 .callbackData("settings")
                 .build();
-        InlineKeyboardMarkup keyboard = InlineKeyboardMarkup.builder()
+        return InlineKeyboardMarkup.builder()
                 .keyboard(Collections.singletonList(
                         Arrays.asList(buttonInfo, buttonSettings)
                 ))
                 .build();
-        message.setReplyMarkup(keyboard);
-        absSender.execute(message);
     }
 }
