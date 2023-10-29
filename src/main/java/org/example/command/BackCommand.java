@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 
 public class BackCommand extends BotCommand {
     public BackCommand() {
-        super("back", "Назад🔙");
+        super("command back", "Назад🔙");
     }
 
     @Override

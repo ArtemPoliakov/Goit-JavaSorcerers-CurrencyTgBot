@@ -1,4 +1,4 @@
-package org.example.command;
+package org.example.command.timeAndZone;
 
 import lombok.SneakyThrows;
 import org.example.messageProcessingAndSendingPart.BotUser;
@@ -11,33 +11,31 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-public class SignsAfterComaCommand extends BotCommand {
+public class AlertTimesResetCommand extends BotCommand {
     private Update update;
-    private String signsAfterComa;
+    private int times;
 
-    public SignsAfterComaCommand(String signsAfterComa, Update update) {
+    public AlertTimesResetCommand(String times, Update update) {
         this();
-        this.signsAfterComa = signsAfterComa;
         this.update = update;
+        this.times = Integer.parseInt(times);
     }
 
-    public SignsAfterComaCommand() {
-        super("decimal places", "Кількість знаків після коми:");
+    public AlertTimesResetCommand() {
+        super("alertTimesCommand", "Command for processing digit buttons of alert times");
     }
 
     @Override
     @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
-        int quantity = Integer.parseInt(signsAfterComa);
-        botUser.setSignsAfterComma(quantity);
+        botUser.setTimeOfSending(times);
 
         int messageId = update.getCallbackQuery().getMessage().getMessageId();
-        long chatId = chat.getId();
-        DecimalPlaces dp = new DecimalPlaces();
-        InlineKeyboardMarkup inlineKeyboardMarkup = dp.getInlineKeyboardMarkup(botUser);
+        AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
+        InlineKeyboardMarkup inlineKeyboardMarkup = alertTimesCommand.getInlineKeyboardMarkup(botUser);
         EditMessageReplyMarkup edit = EditMessageReplyMarkup.builder()
-                .chatId(chatId)
+                .chatId(chat.getId())
                 .messageId(messageId)
                 .replyMarkup(inlineKeyboardMarkup)
                 .build();

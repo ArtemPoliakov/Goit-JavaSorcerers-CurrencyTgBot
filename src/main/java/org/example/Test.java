@@ -1,16 +1,7 @@
 package org.example;
 
-import org.example.MessageProcessingAndSendingPart.BotUser;
-import org.example.app.Client;
+import org.example.messageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
-import org.example.bank.Bank;
-import org.example.bank.Currency;
-import org.example.dto.MonoBankCurrencyDTO;
-
-import java.util.List;
-import java.util.Map;
-
-import static java.util.Map.entry;
 
 public class Test {
     public static void main(String[] args) throws InterruptedException {

@@ -1,7 +1,7 @@
 package org.example.command.bankTgLogics;
 
 import lombok.SneakyThrows;
-import org.example.MessageProcessingAndSendingPart.BotUser;
+import org.example.messageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.example.bank.Bank;
 import org.example.projectUtils.UtilMethods;
@@ -17,9 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BanksCommand extends BotCommand {
-    public BanksCommand(){
+    public BanksCommand() {
         super("banksCommand", "Command for getting banks menu");
     }
+
     @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
@@ -30,14 +31,15 @@ public class BanksCommand extends BotCommand {
         sendMessage.setReplyMarkup(getInlineKeyboardMarkup(botUser));
         absSender.execute(sendMessage);
     }
-    public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser){
+
+    public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser) {
         List<String> allNamesList = List.of("MONO", "PRIVAT", "NBU");
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        for(String name: allNamesList){
+        for (String name : allNamesList) {
             Bank.BankName bankEnum = convertStringToBankEnum(name);
             String ukrText = convertEngToUkr(name);
             buttons.add(List.of(UtilMethods.createButton(botUser.getBanksMap().get(bankEnum)
-                    ?"✅ "+ukrText: ukrText, "bankSelection_"+name)));
+                    ? "✅ " + ukrText : ukrText, "bankSelection_" + name)));
         }
         return InlineKeyboardMarkup
                 .builder()
@@ -45,16 +47,17 @@ public class BanksCommand extends BotCommand {
                 .build();
     }
 
-    public Bank.BankName convertStringToBankEnum(String name){
-        return switch(name){
+    public Bank.BankName convertStringToBankEnum(String name) {
+        return switch (name) {
             case "MONO" -> Bank.BankName.MONO;
             case "PRIVAT" -> Bank.BankName.PRIVAT;
             case "NBU" -> Bank.BankName.NBU;
             default -> Bank.BankName.UNDEFINED_BANK;
         };
     }
-    private String convertEngToUkr(String engName){
-        return switch (engName){
+
+    private String convertEngToUkr(String engName) {
+        return switch (engName) {
             case "MONO" -> "Монобанк\uD83C\uDFE6";
             case "PRIVAT" -> "Приватбанк\uD83C\uDFE6";
             case "NBU" -> "НБУ\uD83C\uDFE6";

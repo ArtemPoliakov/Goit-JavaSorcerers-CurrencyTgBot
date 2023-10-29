@@ -1,10 +1,9 @@
 package org.example.command.bankTgLogics;
 
 import lombok.SneakyThrows;
-import org.example.MessageProcessingAndSendingPart.BotUser;
+import org.example.messageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.example.bank.Bank;
-import org.example.command.timeAndZone.ZoneCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -16,14 +15,17 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public class BankSelectionCommand extends BotCommand {
     private String name;
     private Update update;
-    public BankSelectionCommand(String name, Update update){
+
+    public BankSelectionCommand(String name, Update update) {
         this();
         this.name = name;
         this.update = update;
     }
-    public BankSelectionCommand(){
+
+    public BankSelectionCommand() {
         super("bankSelectionCommand", "Command for managing user banks");
     }
+
     @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
