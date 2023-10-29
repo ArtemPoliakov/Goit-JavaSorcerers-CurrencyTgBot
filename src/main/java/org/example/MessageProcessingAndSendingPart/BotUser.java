@@ -56,17 +56,17 @@ public class BotUser {
     }
 
     public void setTimeOfSending(int timeOfSending){
+        killUserSendingProcess();
         this.timeOfSending = timeOfSending;
-        killUserSendingProcess(executor);
         invokeSendingProcess();
     }
     public void setTimeZone(int timeZone){
         this.timeZone = timeZone;
-        if(executor.isShutdown()){
-            return;
-        }else {
-            killUserSendingProcess(executor);
-            invokeSendingProcess();
+        if(executor!=null) {
+            if (!executor.isShutdown()) {
+                killUserSendingProcess();
+                invokeSendingProcess();
+            }
         }
     }
     public void setBankNeedByName(Bank.BankName name, Boolean need){
@@ -75,7 +75,8 @@ public class BotUser {
     public void setCurrencyNeedByName(Currency.CurrencyName name, Boolean need){
         currenciesMap.put(name, need);
     }
-    public void killUserSendingProcess(ScheduledThreadPoolExecutor executor){
+    public void killUserSendingProcess(){
+        timeOfSending = -1;
         if(executor!=null){
             if(!executor.isShutdown()){
                 executor.shutdownNow();

@@ -7,6 +7,4 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public interface Command {
     void execute(AbsSender absSender, User user, Chat chat, String[] strings);
 
-
-    String getCommandIdentifier();
 }

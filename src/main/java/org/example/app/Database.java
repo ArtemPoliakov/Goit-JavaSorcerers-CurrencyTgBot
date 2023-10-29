@@ -16,4 +16,14 @@ public class Database {
     public static Database getDatabase(){
         return usersDatabase;
     }
+    public static BotUser getUserById(long id){
+        if (!Database.getDatabase().getUsersMap().containsKey(id)){
+            Database.getDatabase().getUsersMap().put(id, BotUser.newDefaultUserById(id));
+        }
+        BotUser botUser = Database.getDatabase().getUsersMap().get(id);
+        return botUser;
+    }
+    public static void putUserById(long id, BotUser botUser){
+        Database.getDatabase().getUsersMap().put(id, botUser);
+    }
 }
