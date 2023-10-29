@@ -15,12 +15,12 @@ public class HelpCommand extends BotCommand {
     @Override
     @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-            SendMessage message = new SendMessage();
-            message.setChatId(chat.getId());
-            message.setText("Якщо вам потрібна допомога або є питання які ви хочете уточнити, напишіть їм👇🏻\n"
-                    + "@ArtemPoliakovUA\n"
-                    + "@fl1x3\n"
-                    + "@R3qp1o\n");
-            absSender.execute(message);
+        SendMessage message = new SendMessage();
+        message.setChatId(chat.getId());
+        message.setText("Якщо вам потрібна допомога або є питання які ви хочете уточнити, напишіть їм👇🏻\n"
+                + "@ArtemPoliakovUA\n"
+                + "@fl1x3\n"
+                + "@R3qp1o\n");
+        absSender.execute(message);
     }
 }

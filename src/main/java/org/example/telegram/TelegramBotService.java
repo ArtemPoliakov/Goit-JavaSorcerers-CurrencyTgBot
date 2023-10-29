@@ -10,7 +10,7 @@ public class TelegramBotService {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(currencyTelegramBot);
-        }catch (TelegramApiException ex){
+        } catch (TelegramApiException ex) {
             System.out.println(ex.getMessage());
         }
     }

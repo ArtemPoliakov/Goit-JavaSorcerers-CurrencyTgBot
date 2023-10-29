@@ -24,8 +24,9 @@ public class BotMessageProcessor {
         Thread.sleep(4000);
         new BotMessageProcessor().sendMessageToUser(BotUser.newDefaultUserById(2L), client.getBanks(), 1);
     }
+
     @SneakyThrows
-    public void sendMessageToUser(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
+    public void sendMessageToUser(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount) {
         String messageText = buildMessageText(botUser, banksData, amount);
         System.out.println(messageText);
         SendMessage sendMessage = new SendMessage();
@@ -49,12 +50,13 @@ public class BotMessageProcessor {
         sendMessage.setParseMode("markdown");
         instance.execute(sendMessage);
     }
-    private String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount){
+
+    private String buildMessageText(BotUser botUser, Map<Bank.BankName, Bank> banksData, int amount) {
         StringBuilder builder = new StringBuilder();
-        for(Bank.BankName bankName: banksData.keySet()){
-            if(botUser.getBanksMap().get(bankName)){
-                builder.append(bankName.getMessage()+"\n");
-                if(banksData.get(bankName).getCurrencyList()!=null) {
+        for (Bank.BankName bankName : banksData.keySet()) {
+            if (botUser.getBanksMap().get(bankName)) {
+                builder.append(bankName.getMessage() + "\n");
+                if (banksData.get(bankName).getCurrencyList() != null) {
                     for (Currency currency : banksData.get(bankName).getCurrencyList()) {
                         if (botUser.getCurrenciesMap().get(currency.getCurrencyName())) {
                             builder.append(currency.getCurrencyName().getMessage() + "\n");
@@ -63,7 +65,7 @@ public class BotMessageProcessor {
                             builder.append("Sell: " + getUserFitAmount(currency.getSellPrice(), signsAfterComma, amount) + "\n");
                         }
                     }
-                } else{
+                } else {
                     builder.append("ERROR: operation refused by bank");
                 }
                 builder.append("\n");
@@ -71,7 +73,8 @@ public class BotMessageProcessor {
         }
         return String.valueOf(builder);
     }
-    private String getUserFitAmount(double originValue,int decimalPlaces, int amount){
+
+    private String getUserFitAmount(double originValue, int decimalPlaces, int amount) {
         BigDecimal bigDecimal = new BigDecimal(originValue);
         bigDecimal = bigDecimal.multiply(BigDecimal.valueOf(amount));
         bigDecimal = bigDecimal.setScale(decimalPlaces, RoundingMode.HALF_UP);

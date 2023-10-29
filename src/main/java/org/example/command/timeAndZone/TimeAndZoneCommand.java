@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeAndZoneCommand extends BotCommand {
-    public TimeAndZoneCommand(){
+    public TimeAndZoneCommand() {
         super("TimeAndZone", "Time and zone command");
     }
+
     @SneakyThrows
     @Override
-    public void execute(AbsSender absSender, User user, Chat chat, String[] strings){
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         InlineKeyboardButton time = InlineKeyboardButton
                 .builder()
                 .text("Час сповіщень🔔")
