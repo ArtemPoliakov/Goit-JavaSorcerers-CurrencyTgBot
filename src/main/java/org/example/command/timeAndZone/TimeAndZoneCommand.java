@@ -23,6 +23,7 @@ public class TimeAndZoneCommand extends BotCommand {
     public TimeAndZoneCommand(){
         super("TimeAndZone", "Time and zone command");
     }
+
     @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings){

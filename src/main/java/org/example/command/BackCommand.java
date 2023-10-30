@@ -24,7 +24,7 @@ public class BackCommand extends BotCommand {
         this.update = update;
     }
     public BackCommand() {
-        super("back", "Назад🔙");
+        super("command back", "Назад🔙");
     }
 
     @Override

@@ -22,7 +22,7 @@ import static org.example.bank.Currency.CurrencyName.USD;
 public class BotUser {
     private static final int MAX_SIGNS_AFTER_COMMA = 4;
     private static final int DEFAULT_TIME_OF_SENDING = -1;
-    private static final int DEFAULT_TIME_ZONE = 0;
+    private static final int DEFAULT_TIME_ZONE = 2;
     private static final boolean defaultMonobankSetting = true;
     private static final boolean defaultPrivatBankSetting = true;
     private static final boolean defaultNbuSetting = true;
@@ -37,17 +37,19 @@ public class BotUser {
     private Map<Currency.CurrencyName, Boolean> currenciesMap;
     @Setter(value = AccessLevel.NONE)
     private ScheduledThreadPoolExecutor executor;
-    private BotUser(long userChatId){
+
+    private BotUser(long userChatId) {
         this.userChatId = userChatId;
     }
-    public static BotUser newDefaultUserById(long chatId){
+
+    public static BotUser newDefaultUserById(long chatId) {
         BotUser botUser = new BotUser(chatId);
         botUser.setBanksMap(new HashMap<>());
         botUser.setCurrenciesMap(new HashMap<>());
         botUser.signsAfterComma = MAX_SIGNS_AFTER_COMMA;
         botUser.timeZone = DEFAULT_TIME_ZONE;
         botUser.timeOfSending = DEFAULT_TIME_OF_SENDING;
-        botUser.banksMap.put(MONO,defaultMonobankSetting);
+        botUser.banksMap.put(MONO, defaultMonobankSetting);
         botUser.banksMap.put(PRIVAT, defaultPrivatBankSetting);
         botUser.banksMap.put(NBU, defaultNbuSetting);
         botUser.currenciesMap.put(EUR, defaultEurSetting);
@@ -55,35 +57,61 @@ public class BotUser {
         return botUser;
     }
 
+
+    public void setTimeOfSending(int timeOfSending) {
+
     public void setTimeOfSending(int timeOfSending){
+
         killUserSendingProcess();
         this.timeOfSending = timeOfSending;
         invokeSendingProcess();
     }
-    public void setTimeZone(int timeZone){
+
+    public void setTimeZone(int timeZone) {
         this.timeZone = timeZone;
-        if(executor!=null) {
+        if (executor != null) {
             if (!executor.isShutdown()) {
                 killUserSendingProcess();
                 invokeSendingProcess();
             }
         }
     }
-    public void setBankNeedByName(Bank.BankName name, Boolean need){
+
+    public void setBankNeedByName(Bank.BankName name, Boolean need) {
         banksMap.put(name, need);
     }
-    public void setCurrencyNeedByName(Currency.CurrencyName name, Boolean need){
+
+    public void setCurrencyNeedByName(Currency.CurrencyName name, Boolean need) {
         currenciesMap.put(name, need);
     }
+
+
+    public void killUserSendingProcess() {
+        timeOfSending = -1;
+        if (executor != null) {
+            if (!executor.isShutdown()) {
+
     public void killUserSendingProcess(){
         timeOfSending = -1;
         if(executor!=null){
             if(!executor.isShutdown()){
+
                 executor.shutdownNow();
             }
         }
     }
-    public void invokeSendingProcess(){
+
+    public boolean isProcessActive() {
+        boolean result = false;
+        if (executor != null) {
+            if (!executor.isShutdown()) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public void invokeSendingProcess() {
         long from = OffsetDateTime.now(ZoneOffset.ofHours(timeZone)).toInstant().toEpochMilli();
         LocalDateTime localTo = LocalDate.now().atTime(timeOfSending, 0, 0);
         long to = localTo.atOffset(ZoneOffset.ofHours(timeZone)).toInstant().toEpochMilli();
@@ -92,10 +120,10 @@ public class BotUser {
             approximateDiff = Timer.ONE_DAY + approximateDiff;
         }
         executor = new ScheduledThreadPoolExecutor(1);
-        executor.scheduleAtFixedRate(()->{
+        executor.scheduleAtFixedRate(() -> {
             BotMessageProcessor processor = new BotMessageProcessor();
             //TODO: add a param with Bank info DTO when it is added
             processor.sendMessageToUser(this, Client.getInstance().getBanks(), 1);
-        },approximateDiff, Timer.ONE_DAY, TimeUnit.MILLISECONDS);
+        }, approximateDiff, Timer.ONE_DAY, TimeUnit.MILLISECONDS);
     }
 }

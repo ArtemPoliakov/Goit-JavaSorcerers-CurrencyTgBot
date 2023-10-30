@@ -10,22 +10,24 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class SignsAfterComaCommand extends BotCommand implements Command {
+public class SignsAfterComaCommand extends BotCommand {
     private Update update;
     private String signsAfterComa;
-     public SignsAfterComaCommand(String signsAfterComa, Update update) {
-         this();
-         this.signsAfterComa = signsAfterComa;
-         this.update = update;
+
+    public SignsAfterComaCommand(String signsAfterComa, Update update) {
+        this();
+        this.signsAfterComa = signsAfterComa;
+        this.update = update;
     }
-    public SignsAfterComaCommand(){
+
+    public SignsAfterComaCommand() {
         super("decimal places", "Кількість знаків після коми:");
     }
+
     @Override
     @SneakyThrows
-    public void execute(AbsSender absSender, User user, Chat chat, String[] strings){
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
         int quantity = Integer.parseInt(signsAfterComa);
         botUser.setSignsAfterComma(quantity);

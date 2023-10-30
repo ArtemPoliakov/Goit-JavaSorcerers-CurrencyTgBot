@@ -26,9 +26,10 @@ public class ZoneCommand extends BotCommand {
     public ZoneCommand(){
         super("ZoneCommand", "Command for timezone management");
     }
+
     @SneakyThrows
     @Override
-    public void execute(AbsSender absSender, User user, Chat chat, String[] strings){
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
         EditMessageReplyMarkup message = EditMessageReplyMarkup
                 .builder()
@@ -38,15 +39,15 @@ public class ZoneCommand extends BotCommand {
                 .build();
         absSender.execute(message);
     }
-    public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser){
-        String[] zones = new String[]{"+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11",
-                                      "+12","-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-12"};
 
+    public InlineKeyboardMarkup getInlineKeyboardMarkup(BotUser botUser) {
+        String[] zones = new String[]{"+0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11",
+                "+12", "-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-12"};
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         int counter = 0;
-        while(counter < zones.length) {
+        while (counter < zones.length) {
             List<InlineKeyboardButton> row = new ArrayList<>();
-            for(int i = 0; i<5; i++) {
+            for (int i = 0; i < 5; i++) {
                 String s = zones[counter];
                 int intEquivalent = Integer.parseInt(s.replace("+", ""));
                 row.add(UtilMethods.createButton(

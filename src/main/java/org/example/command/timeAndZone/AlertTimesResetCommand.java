@@ -1,9 +1,8 @@
-package org.example.command.bankTgLogics;
+package org.example.command.timeAndZone;
 
 import lombok.SneakyThrows;
 import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
-import org.example.bank.Bank;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -12,29 +11,29 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-public class BankSelectionCommand extends BotCommand {
-    private String name;
+public class AlertTimesResetCommand extends BotCommand {
     private Update update;
+    private int times;
 
-    public BankSelectionCommand(String name, Update update) {
+    public AlertTimesResetCommand(String times, Update update) {
         this();
-        this.name = name;
         this.update = update;
+        this.times = Integer.parseInt(times);
     }
 
-    public BankSelectionCommand() {
-        super("bankSelectionCommand", "Command for managing user banks");
+    public AlertTimesResetCommand() {
+        super("alertTimesCommand", "Command for processing digit buttons of alert times");
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
+        botUser.setTimeOfSending(times);
+
         int messageId = update.getCallbackQuery().getMessage().getMessageId();
-        BanksCommand banksCommand = new BanksCommand();
-        Bank.BankName bankEnum = banksCommand.convertStringToBankEnum(name);
-        botUser.getBanksMap().put(bankEnum, !botUser.getBanksMap().get(bankEnum));
-        InlineKeyboardMarkup inlineKeyboardMarkup = banksCommand.getInlineKeyboardMarkup(botUser);
+        AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
+        InlineKeyboardMarkup inlineKeyboardMarkup = alertTimesCommand.getInlineKeyboardMarkup(botUser);
         EditMessageReplyMarkup edit = EditMessageReplyMarkup.builder()
                 .chatId(chat.getId())
                 .messageId(messageId)
