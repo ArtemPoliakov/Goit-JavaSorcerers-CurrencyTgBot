@@ -22,7 +22,7 @@ import static org.example.bank.Currency.CurrencyName.USD;
 public class BotUser {
     private static final int MAX_SIGNS_AFTER_COMMA = 4;
     private static final int DEFAULT_TIME_OF_SENDING = -1;
-    private static final int DEFAULT_TIME_ZONE = 3;
+    private static final int DEFAULT_TIME_ZONE = 2;
     private static final boolean defaultMonobankSetting = true;
     private static final boolean defaultPrivatBankSetting = true;
     private static final boolean defaultNbuSetting = true;

@@ -74,31 +74,34 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             String action = callbackQuery.getData();
             String[] data = action.split("_");
             if ("settings".equals(data[0])) {
-                SettingsCommand settingsCommand = new SettingsCommand();
+                SettingsCommand settingsCommand = new SettingsCommand(update);
                 settingsCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("back".equals(data[0])) {// repeat
-                BackCommand backCommand = new BackCommand();
+            } else if ("back".equals(data[0])) {
+                BackCommand backCommand = new BackCommand(data[1], update);
                 backCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("decimalPlaces".equals(data[0])) {
                 SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1], update);
                 signsAfterComaCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("info".equals(data[0])) {
+            } else if ("bank".equals(data[0])) {
+                BanksCommand banksCommand = new BanksCommand(update);
+                banksCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("signsAfterComa".equals(data[0])) {
-                DecimalPlaces decimalPlacesCommand = new DecimalPlaces();
+            } else if ("signsAfterComa".equals(data[0])){
+                DecimalPlaces decimalPlacesCommand = new DecimalPlaces(update);
                 decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("alert times".equals(data[0])) {
                 AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
                 alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("TimeAndZone".equals(data[0])){
+                TimeAndZoneCommand timeAndZoneCommand = new TimeAndZoneCommand(update);
+                timeAndZoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            } else if("zone".equals(data[0])){
+                ZoneCommand zoneCommand = new ZoneCommand(update);
             } else if ("alertTimesCommand".equals(data[0])) {
                 AlertTimesResetCommand alertTimesResetCommand = new AlertTimesResetCommand(data[1], update);
                 alertTimesResetCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("TimeAndZone".equals(data[0])) {
-                TimeAndZoneCommand timeAndZoneCommand = new TimeAndZoneCommand();
-                timeAndZoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("zone".equals(data[0])) {
-                ZoneCommand zoneCommand = new ZoneCommand();
                 zoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("zoneResetCommand".equals(data[0])) {
                 ZoneResetCommand zoneResetCommand = new ZoneResetCommand(data[1], update);

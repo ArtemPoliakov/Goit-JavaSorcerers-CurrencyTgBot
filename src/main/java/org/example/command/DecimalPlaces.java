@@ -5,6 +5,7 @@ import org.example.MessageProcessingAndSendingPart.BotUser;
 import org.example.app.Database;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -15,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DecimalPlaces extends BotCommand {
+    private Update update;
+    public DecimalPlaces(Update update){
+        this();
+        this.update = update;
+    }
     public DecimalPlaces() {
         super("decimal places", "Кількість знаків після коми:");
     }
@@ -23,11 +29,12 @@ public class DecimalPlaces extends BotCommand {
     @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
-        SendMessage message = new SendMessage();
-        message.setChatId(chat.getId());
-        message.setText("Кількість знаків після коми:");
-        InlineKeyboardMarkup keyboard = getInlineKeyboardMarkup(botUser);
-        message.setReplyMarkup(keyboard);
+        EditMessageReplyMarkup message = EditMessageReplyMarkup
+                .builder()
+                .chatId(chat.getId())
+                .messageId(update.getCallbackQuery().getMessage().getMessageId())
+                .replyMarkup(getInlineKeyboardMarkup(botUser))
+                .build();
         absSender.execute(message);
     }
 
@@ -43,7 +50,7 @@ public class DecimalPlaces extends BotCommand {
         }
         InlineKeyboardButton backButton = InlineKeyboardButton.builder()
                 .text("Назад🔙")
-                .callbackData("command back")
+                .callbackData("back_fromOneStepFromSettings")
                 .build();
         buttons.add(List.of(backButton));
         return InlineKeyboardMarkup.builder()
