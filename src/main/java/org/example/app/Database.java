@@ -1,7 +1,7 @@
 package org.example.app;
 
 import lombok.Getter;
-import org.example.MessageProcessingAndSendingPart.BotUser;
+import org.example.app.messageProcessingAndSendingPart.BotUser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +20,7 @@ public class Database {
         if (!Database.getDatabase().getUsersMap().containsKey(id)){
             Database.getDatabase().getUsersMap().put(id, BotUser.newDefaultUserById(id));
         }
-        BotUser botUser = Database.getDatabase().getUsersMap().get(id);
-        return botUser;
+        return Database.getDatabase().getUsersMap().get(id);
     }
     public static void putUserById(long id, BotUser botUser){
         Database.getDatabase().getUsersMap().put(id, botUser);

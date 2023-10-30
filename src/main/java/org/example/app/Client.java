@@ -1,15 +1,15 @@
 package org.example.app;
 
-import org.example.bank.Bank;
-import org.example.bank.Bank.BankName;
-import org.example.bank.Currency;
+import org.example.app.bank.Bank;
+import org.example.app.bank.Bank.BankName;
+import org.example.app.bank.Currency;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.dto.MonoBankCurrencyDTO;
-import org.example.dto.NbuCurrencyDTO;
-import org.example.dto.PrivatBankCurrencyDTO;
-import static org.example.bank.Currency.CurrencyName;
-import static org.example.bank.Currency.CurrencyName.*;
+import org.example.app.dto.MonoBankCurrencyDTO;
+import org.example.app.dto.NbuCurrencyDTO;
+import org.example.app.dto.PrivatBankCurrencyDTO;
+import static org.example.app.bank.Currency.CurrencyName;
+import static org.example.app.bank.Currency.CurrencyName.*;
 import static java.util.Map.entry;
 
 import lombok.Getter;

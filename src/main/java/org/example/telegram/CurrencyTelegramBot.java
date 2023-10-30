@@ -1,12 +1,23 @@
 package org.example.telegram;
 
 import lombok.SneakyThrows;
-import org.example.command.*;
-import org.example.command.bankTgLogics.BankSelectionCommand;
-import org.example.command.bankTgLogics.BanksCommand;
-import org.example.command.currancyCommandLogic.CurrencyCommand;
-import org.example.command.currancyCommandLogic.CurrencySelectionCommand;
-import org.example.command.timeAndZone.*;
+import org.example.telegram.command.BackCommand;
+import org.example.telegram.command.bankTgLogics.BankSelectionCommand;
+import org.example.telegram.command.bankTgLogics.BanksCommand;
+import org.example.telegram.command.currancyCommandLogic.CurrencyCommand;
+import org.example.telegram.command.currancyCommandLogic.CurrencySelectionCommand;
+import org.example.telegram.command.signs.DecimalPlaces;
+import org.example.telegram.command.signs.SignsAfterComaCommand;
+import org.example.telegram.command.startSetupCommands.InfoButtonCommand;
+import org.example.telegram.command.startSetupCommands.SettingsCommand;
+import org.example.telegram.command.textCommands.HelpCommand;
+import org.example.telegram.command.textCommands.StartCommand;
+import org.example.telegram.command.timeAndZone.TimeAndZoneCommand;
+import org.example.telegram.command.timeAndZone.time.AlertTimesCommand;
+import org.example.telegram.command.timeAndZone.time.AlertTimesResetCommand;
+import org.example.telegram.command.timeAndZone.time.TurnOffCommand;
+import org.example.telegram.command.timeAndZone.zone.ZoneCommand;
+import org.example.telegram.command.timeAndZone.zone.ZoneResetCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -18,9 +29,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.regex.Pattern;
 
-import static org.example.telegram.BotConstants.BOT_NAME;
-import static org.example.telegram.BotConstants.BOT_TOKEN;
-
+import static org.example.BotConstants.BOT_NAME;
+import static org.example.BotConstants.BOT_TOKEN;
 
 public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
     private static CurrencyTelegramBot instance;
@@ -79,7 +89,7 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if ("back".equals(data[0])) {
                 BackCommand backCommand = new BackCommand(data[1], update);
                 backCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("decimalPlaces".equals(data[0])) {
+            } else if ("signsAfterComma".equals(data[0])) {
                 SignsAfterComaCommand signsAfterComaCommand = new SignsAfterComaCommand(data[1], update);
                 signsAfterComaCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("bank".equals(data[0])) {
@@ -88,20 +98,23 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
             } else if("info".equals(data[0])){
                 InfoButtonCommand infoButtonCommand = new InfoButtonCommand();
                 infoButtonCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("signsAfterComa".equals(data[0])){
+            } else if ("decimalPlaces".equals(data[0])){
                 DecimalPlaces decimalPlacesCommand = new DecimalPlaces(update);
                 decimalPlacesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if ("alert times".equals(data[0])) {
-                AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
+            } else if ("alertTimes".equals(data[0])) {
+                AlertTimesCommand alertTimesCommand = new AlertTimesCommand(update);
                 alertTimesCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
-            } else if("TimeAndZone".equals(data[0])){
+            } else if("timeAndZone".equals(data[0])){
                 TimeAndZoneCommand timeAndZoneCommand = new TimeAndZoneCommand(update);
                 timeAndZoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if("zone".equals(data[0])){
                 ZoneCommand zoneCommand = new ZoneCommand(update);
+                zoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("alertTimesCommand".equals(data[0])) {
                 AlertTimesResetCommand alertTimesResetCommand = new AlertTimesResetCommand(data[1], update);
                 alertTimesResetCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
+            }else if("zone".equals(data[0])){
+                ZoneCommand zoneCommand = new ZoneCommand(update);
                 zoneCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("zoneResetCommand".equals(data[0])) {
                 ZoneResetCommand zoneResetCommand = new ZoneResetCommand(data[1], update);
@@ -116,7 +129,7 @@ public class CurrencyTelegramBot extends TelegramLongPollingCommandBot {
                 TurnOffCommand turnOffCommand = new TurnOffCommand(update);
                 turnOffCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("currency".equals(data[0])) {
-                CurrencyCommand currencyCommand = new CurrencyCommand();
+                CurrencyCommand currencyCommand = new CurrencyCommand(update);
                 currencyCommand.execute(this, callbackQuery.getFrom(), callbackQuery.getMessage().getChat(), null);
             } else if ("currencySelection".equals(data[0])) {
                 CurrencySelectionCommand currencySelectionCommand = new CurrencySelectionCommand(data[1], update);
