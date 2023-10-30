@@ -47,8 +47,6 @@ public class Client {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(this::updateAllBanks, 0, 5, TimeUnit.MINUTES);
     }
-
-    //TODO: bug check
     private void updateAllBanks() {
        CompletableFuture.runAsync(()->banks.get(BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
        CompletableFuture.runAsync(()->banks.get(BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
