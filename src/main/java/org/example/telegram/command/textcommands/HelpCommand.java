@@ -1,4 +1,4 @@
-package org.example.telegram.command.textCommands;
+package org.example.telegram.command.textcommands;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;

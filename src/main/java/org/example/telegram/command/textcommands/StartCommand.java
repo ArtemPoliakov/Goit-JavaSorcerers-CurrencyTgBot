@@ -1,6 +1,6 @@
-package org.example.telegram.command.textCommands;
+package org.example.telegram.command.textcommands;
 
-import org.example.projectUtils.UtilMethods;
+import org.example.projectutils.UtilMethods;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

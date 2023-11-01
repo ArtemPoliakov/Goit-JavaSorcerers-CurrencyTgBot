@@ -1,4 +1,4 @@
-package org.example.app.messageProcessingAndSendingPart;
+package org.example.app.messageprocessingandsendingpart;
 
 import org.example.app.bank.Currency;
 import lombok.AccessLevel;

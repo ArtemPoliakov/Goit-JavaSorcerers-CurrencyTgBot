@@ -1,7 +1,7 @@
-package org.example.telegram.command.timeAndZone.zone;
+package org.example.telegram.command.timeandzone.time;
 
 import org.example.app.Database;
-import org.example.app.messageProcessingAndSendingPart.BotUser;
+import org.example.app.messageprocessingandsendingpart.BotUser;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
@@ -11,30 +11,29 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-public class ZoneResetCommand extends BotCommand {
+public class AlertTimesResetCommand extends BotCommand {
     private Update update;
-    private int zone;
+    private int times;
 
-    public ZoneResetCommand(String zone, Update update) {
+    public AlertTimesResetCommand(String times, Update update) {
         this();
         this.update = update;
-        this.zone = Integer.parseInt(zone);
+        this.times = Integer.parseInt(times);
     }
 
-    public ZoneResetCommand() {
-        super("zoneResetCommand",
-                "Command for processing digit buttons of timezone");
+    public AlertTimesResetCommand() {
+        super("alertTimesCommand", "Command for processing digit buttons of alert times");
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         BotUser botUser = Database.getUserById(chat.getId());
-        botUser.setTimeZone(zone);
+        botUser.setTimeOfSending(times);
 
         int messageId = update.getCallbackQuery().getMessage().getMessageId();
-        ZoneCommand zoneCommand = new ZoneCommand();
-        InlineKeyboardMarkup inlineKeyboardMarkup = zoneCommand.getInlineKeyboardMarkup(botUser);
+        AlertTimesCommand alertTimesCommand = new AlertTimesCommand();
+        InlineKeyboardMarkup inlineKeyboardMarkup = alertTimesCommand.getInlineKeyboardMarkup(botUser);
         EditMessageReplyMarkup edit = EditMessageReplyMarkup.builder()
                 .chatId(chat.getId())
                 .messageId(messageId)

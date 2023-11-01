@@ -45,10 +45,11 @@ public class Client {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(this::updateAllBanks, 0, 5, TimeUnit.MINUTES);
     }
+
     private void updateAllBanks() {
-       CompletableFuture.runAsync(()->banks.get(Bank.BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
-       CompletableFuture.runAsync(()->banks.get(Bank.BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
-       CompletableFuture.runAsync(()->banks.get(Bank.BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList()));
+       CompletableFuture.runAsync(() -> banks.get(Bank.BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(() -> banks.get(Bank.BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(() -> banks.get(Bank.BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList()));
     }
 
     public List<Currency> getMonoBankCurrentCurrencyList() {

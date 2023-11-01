@@ -1,10 +1,10 @@
-package org.example.telegram.command.startSetupCommands;
+package org.example.telegram.command.startsetupcommands;
 
 import org.example.app.Client;
 import org.example.app.Database;
 import org.example.app.bank.Bank;
-import org.example.app.messageProcessingAndSendingPart.BotMessageProcessor;
-import org.example.app.messageProcessingAndSendingPart.BotUser;
+import org.example.app.messageprocessingandsendingpart.BotMessageProcessor;
+import org.example.app.messageprocessingandsendingpart.BotUser;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.objects.Chat;

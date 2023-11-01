@@ -1,8 +1,8 @@
 package org.example.telegram.command;
 
-import org.example.telegram.command.startSetupCommands.SettingsCommand;
-import org.example.telegram.command.textCommands.StartCommand;
-import org.example.telegram.command.timeAndZone.TimeAndZoneCommand;
+import org.example.telegram.command.startsetupcommands.SettingsCommand;
+import org.example.telegram.command.textcommands.StartCommand;
+import org.example.telegram.command.timeandzone.TimeAndZoneCommand;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;

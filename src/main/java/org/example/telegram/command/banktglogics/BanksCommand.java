@@ -1,9 +1,9 @@
-package org.example.telegram.command.bankTgLogics;
+package org.example.telegram.command.banktglogics;
 
 import org.example.app.Database;
 import org.example.app.bank.Bank;
-import org.example.app.messageProcessingAndSendingPart.BotUser;
-import org.example.projectUtils.UtilMethods;
+import org.example.app.messageprocessingandsendingpart.BotUser;
+import org.example.projectutils.UtilMethods;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;

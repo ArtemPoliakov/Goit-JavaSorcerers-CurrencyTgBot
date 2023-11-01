@@ -1,10 +1,10 @@
-package org.example.app.messageProcessingAndSendingPart;
+package org.example.app.messageprocessingandsendingpart;
 
 
 import org.example.app.bank.Currency;
 import lombok.SneakyThrows;
 import org.example.app.bank.Bank;
-import org.example.telegram.command.textCommands.StartCommand;
+import org.example.telegram.command.textcommands.StartCommand;
 import org.example.telegram.CurrencyTelegramBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.math.BigDecimal;

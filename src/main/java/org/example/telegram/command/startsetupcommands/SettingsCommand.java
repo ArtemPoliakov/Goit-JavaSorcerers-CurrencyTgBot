@@ -1,6 +1,6 @@
-package org.example.telegram.command.startSetupCommands;
+package org.example.telegram.command.startsetupcommands;
 
-import org.example.projectUtils.UtilMethods;
+import org.example.projectutils.UtilMethods;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
