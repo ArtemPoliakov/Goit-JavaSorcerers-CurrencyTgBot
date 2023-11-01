@@ -2,7 +2,7 @@ package org.example.telegram.command.signs;
 
 import org.example.app.Database;
 import org.example.app.messageprocessingandsendingpart.BotUser;
-import org.example.projectutils.UtilMethods;
+import org.example.app.projectutils.UtilMethods;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;

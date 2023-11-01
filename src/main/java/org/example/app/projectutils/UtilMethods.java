@@ -1,4 +1,4 @@
-package org.example.projectutils;
+package org.example.app.projectutils;
 
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 

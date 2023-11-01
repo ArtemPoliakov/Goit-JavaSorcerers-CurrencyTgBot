@@ -1,7 +1,7 @@
 package org.example.telegram.command.timeandzone;
 
 import lombok.SneakyThrows;
-import org.example.projectutils.UtilMethods;
+import org.example.app.projectutils.UtilMethods;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Chat;

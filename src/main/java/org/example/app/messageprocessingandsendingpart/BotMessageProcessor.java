@@ -62,9 +62,9 @@ public class BotMessageProcessor {
             }
         }
         String response;
-        if(!isAnyBankSelected){
+        if(!isAnyBankSelected) {
             response = NO_BANK_SELECTED_MESSAGE;
-        } else if(!isAnyCurrencySelected){
+        } else if(!isAnyCurrencySelected) {
             response = NO_CURRENCY_SELECTED_MESSAGE;
         } else {
             response = String.valueOf(builder);

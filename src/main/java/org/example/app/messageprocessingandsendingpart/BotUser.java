@@ -54,13 +54,13 @@ public class BotUser {
         botUser.currenciesMap.put(Currency.CurrencyName.USD, defaultUsdSetting);
         return botUser;
     }
-        public void setTimeOfSending (int timeOfSending){
+        public void setTimeOfSending (int timeOfSending) {
             killUserSendingProcessAndResetTime();
             this.timeOfSending = timeOfSending;
             invokeSendingProcess();
         }
 
-        public void setTimeZone ( int timeZone){
+        public void setTimeZone (int timeZone) {
             this.timeZone = timeZone;
             if (executor != null) {
                 if (!executor.isShutdown()) {
