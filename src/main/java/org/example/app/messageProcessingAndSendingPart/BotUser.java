@@ -1,11 +1,11 @@
 package org.example.app.messageProcessingAndSendingPart;
 
+import org.example.app.bank.Currency;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.example.app.Client;
 import org.example.app.bank.Bank;
-import org.example.app.bank.Currency;
 
 import javax.management.timer.Timer;
 import java.time.*;
@@ -15,8 +15,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static org.example.app.bank.Bank.BankName.*;
-import static org.example.app.bank.Currency.CurrencyName.EUR;
-import static org.example.app.bank.Currency.CurrencyName.USD;
 
 @Data
 public class BotUser {
@@ -52,8 +50,8 @@ public class BotUser {
         botUser.banksMap.put(MONO, defaultMonobankSetting);
         botUser.banksMap.put(PRIVAT, defaultPrivatBankSetting);
         botUser.banksMap.put(NBU, defaultNbuSetting);
-        botUser.currenciesMap.put(EUR, defaultEurSetting);
-        botUser.currenciesMap.put(USD, defaultUsdSetting);
+        botUser.currenciesMap.put(Currency.CurrencyName.EUR, defaultEurSetting);
+        botUser.currenciesMap.put(Currency.CurrencyName.USD, defaultUsdSetting);
         return botUser;
     }
         public void setTimeOfSending (int timeOfSending){

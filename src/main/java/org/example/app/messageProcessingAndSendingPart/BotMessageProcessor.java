@@ -1,9 +1,9 @@
 package org.example.app.messageProcessingAndSendingPart;
 
 
+import org.example.app.bank.Currency;
 import lombok.SneakyThrows;
 import org.example.app.bank.Bank;
-import org.example.app.bank.Currency;
 import org.example.telegram.command.textCommands.StartCommand;
 import org.example.telegram.CurrencyTelegramBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

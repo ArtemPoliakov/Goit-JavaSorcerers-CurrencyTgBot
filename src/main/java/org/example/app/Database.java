@@ -1,7 +1,7 @@
 package org.example.app;
 
-import lombok.Getter;
 import org.example.app.messageProcessingAndSendingPart.BotUser;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;

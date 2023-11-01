@@ -1,15 +1,13 @@
 package org.example.app;
 
 import org.example.app.bank.Bank;
-import org.example.app.bank.Bank.BankName;
 import org.example.app.bank.Currency;
+import org.example.app.dto.MonoBankCurrencyDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.app.dto.MonoBankCurrencyDTO;
 import org.example.app.dto.NbuCurrencyDTO;
 import org.example.app.dto.PrivatBankCurrencyDTO;
-import static org.example.app.bank.Currency.CurrencyName;
-import static org.example.app.bank.Currency.CurrencyName.*;
+
 import static java.util.Map.entry;
 
 import lombok.Getter;
@@ -32,10 +30,10 @@ public class Client {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Getter
-    private final Map<BankName, Bank> banks = Map.ofEntries(
-            entry(BankName.MONO, new Bank()),
-            entry(BankName.PRIVAT, new Bank()),
-            entry(BankName.NBU, new Bank())
+    private final Map<Bank.BankName, Bank> banks = Map.ofEntries(
+            entry(Bank.BankName.MONO, new Bank()),
+            entry(Bank.BankName.PRIVAT, new Bank()),
+            entry(Bank.BankName.NBU, new Bank())
     );
 
     public static Client getInstance() {
@@ -48,18 +46,18 @@ public class Client {
         executorService.scheduleAtFixedRate(this::updateAllBanks, 0, 5, TimeUnit.MINUTES);
     }
     private void updateAllBanks() {
-       CompletableFuture.runAsync(()->banks.get(BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
-       CompletableFuture.runAsync(()->banks.get(BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
-       CompletableFuture.runAsync(()->banks.get(BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList()));
+       CompletableFuture.runAsync(()->banks.get(Bank.BankName.MONO).setCurrencyList(getMonoBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(()->banks.get(Bank.BankName.PRIVAT).setCurrencyList(getPrivatBankCurrentCurrencyList()));
+       CompletableFuture.runAsync(()->banks.get(Bank.BankName.NBU).setCurrencyList(getNbuCurrentCurrencyList()));
     }
 
     public List<Currency> getMonoBankCurrentCurrencyList() {
         List<MonoBankCurrencyDTO> monoBankCurrencyDTOList = getMonoBankCurrencyDTOList();
 
-        Map<CurrencyName, Double> buyMap = getMonoBankCurrenciesBuy(monoBankCurrencyDTOList);
-        Map<CurrencyName, Double> sellMap = getMonoBankCurrenciesSell(monoBankCurrencyDTOList);
-        Currency usd = new Currency(USD, buyMap.get(USD), sellMap.get(USD));
-        Currency eur = new Currency(EUR, buyMap.get(EUR), sellMap.get(EUR));
+        Map<Currency.CurrencyName, Double> buyMap = getMonoBankCurrenciesBuy(monoBankCurrencyDTOList);
+        Map<Currency.CurrencyName, Double> sellMap = getMonoBankCurrenciesSell(monoBankCurrencyDTOList);
+        Currency usd = new Currency(Currency.CurrencyName.USD, buyMap.get(Currency.CurrencyName.USD), sellMap.get(Currency.CurrencyName.USD));
+        Currency eur = new Currency(Currency.CurrencyName.EUR, buyMap.get(Currency.CurrencyName.EUR), sellMap.get(Currency.CurrencyName.EUR));
 
         return List.of(usd, eur);
     }
@@ -67,10 +65,10 @@ public class Client {
     public List<Currency> getPrivatBankCurrentCurrencyList() {
         List<PrivatBankCurrencyDTO> privatBankCurrencyDTOList = getPrivatBankCurrencyDTOList();
 
-        Map<CurrencyName, Double> buyMap = getPrivatBankCurrenciesBuy(privatBankCurrencyDTOList);
-        Map<CurrencyName, Double> sellMap = getPrivatBankCurrenciesSell(privatBankCurrencyDTOList);
-        Currency usd = new Currency(USD, buyMap.get(USD), sellMap.get(USD));
-        Currency eur = new Currency(EUR, buyMap.get(EUR), sellMap.get(EUR));
+        Map<Currency.CurrencyName, Double> buyMap = getPrivatBankCurrenciesBuy(privatBankCurrencyDTOList);
+        Map<Currency.CurrencyName, Double> sellMap = getPrivatBankCurrenciesSell(privatBankCurrencyDTOList);
+        Currency usd = new Currency(Currency.CurrencyName.USD, buyMap.get(Currency.CurrencyName.USD), sellMap.get(Currency.CurrencyName.USD));
+        Currency eur = new Currency(Currency.CurrencyName.EUR, buyMap.get(Currency.CurrencyName.EUR), sellMap.get(Currency.CurrencyName.EUR));
 
         return List.of(usd, eur);
     }
@@ -78,39 +76,39 @@ public class Client {
     public List<Currency> getNbuCurrentCurrencyList() {
         List<NbuCurrencyDTO> nbuCurrencyDTOList = getNbuCurrencyDTOList();
 
-        Map<CurrencyName, Double> buyAndSellMap = getNbuCurrencies(nbuCurrencyDTOList);
-        Currency usd = new Currency(USD, buyAndSellMap.get(USD), buyAndSellMap.get(USD));
-        Currency eur = new Currency(EUR, buyAndSellMap.get(EUR), buyAndSellMap.get(EUR));
+        Map<Currency.CurrencyName, Double> buyAndSellMap = getNbuCurrencies(nbuCurrencyDTOList);
+        Currency usd = new Currency(Currency.CurrencyName.USD, buyAndSellMap.get(Currency.CurrencyName.USD), buyAndSellMap.get(Currency.CurrencyName.USD));
+        Currency eur = new Currency(Currency.CurrencyName.EUR, buyAndSellMap.get(Currency.CurrencyName.EUR), buyAndSellMap.get(Currency.CurrencyName.EUR));
 
         return List.of(usd, eur);
     }
 
 
-    private Map<CurrencyName, Double> getMonoBankCurrenciesBuy(List<MonoBankCurrencyDTO> monoBankCurrencyDTOList) {
+    private Map<Currency.CurrencyName, Double> getMonoBankCurrenciesBuy(List<MonoBankCurrencyDTO> monoBankCurrencyDTOList) {
         return monoBankCurrencyDTOList.stream()
                 .filter(currency -> currency.getCurrencyCodeA() == 840 || currency.getCurrencyCodeA() == 978)
                 .filter(currency -> currency.getCurrencyCodeB() == 980)
                 .collect(Collectors.toMap(currency -> getCurrencyNameByIntegerCode(currency.getCurrencyCodeA()), MonoBankCurrencyDTO::getRateBuy));
     }
 
-    private Map<CurrencyName, Double> getMonoBankCurrenciesSell(List<MonoBankCurrencyDTO> monoBankCurrencyDTOList) {
+    private Map<Currency.CurrencyName, Double> getMonoBankCurrenciesSell(List<MonoBankCurrencyDTO> monoBankCurrencyDTOList) {
         return monoBankCurrencyDTOList.stream()
                 .filter(currency -> currency.getCurrencyCodeA() == 840 || currency.getCurrencyCodeA() == 978)
                 .filter(currency -> currency.getCurrencyCodeB() == 980)
                 .collect(Collectors.toMap(currency -> getCurrencyNameByIntegerCode(currency.getCurrencyCodeA()), MonoBankCurrencyDTO::getRateSell));
     }
 
-    private Map<CurrencyName, Double> getPrivatBankCurrenciesBuy(List<PrivatBankCurrencyDTO> privatBankCurrencyDTOList) {
+    private Map<Currency.CurrencyName, Double> getPrivatBankCurrenciesBuy(List<PrivatBankCurrencyDTO> privatBankCurrencyDTOList) {
         return privatBankCurrencyDTOList.stream()
                 .collect(Collectors.toMap(currency-> getCurrencyNameByStringCode(currency.getCcy()), PrivatBankCurrencyDTO::getBuy));
     }
 
-    private Map<CurrencyName, Double> getPrivatBankCurrenciesSell(List<PrivatBankCurrencyDTO> privatBankCurrencyDTOList) {
+    private Map<Currency.CurrencyName, Double> getPrivatBankCurrenciesSell(List<PrivatBankCurrencyDTO> privatBankCurrencyDTOList) {
         return privatBankCurrencyDTOList.stream()
                 .collect(Collectors.toMap(currency-> getCurrencyNameByStringCode(currency.getCcy()), PrivatBankCurrencyDTO::getSale));
     }
 
-    private Map<CurrencyName, Double> getNbuCurrencies(List<NbuCurrencyDTO> nbuCurrencyDTOList) {
+    private Map<Currency.CurrencyName, Double> getNbuCurrencies(List<NbuCurrencyDTO> nbuCurrencyDTOList) {
         return nbuCurrencyDTOList.stream()
                 .filter(currency -> currency.getCurrencyCode() == 840 || currency.getCurrencyCode() == 978)
                 .collect(Collectors.toMap(currency-> getCurrencyNameByStringCode(currency.getCurrencyCodeL()), NbuCurrencyDTO::getAmount));
@@ -153,19 +151,19 @@ public class Client {
     }
 
 
-    private CurrencyName getCurrencyNameByStringCode(String currencyCode){
+    private Currency.CurrencyName getCurrencyNameByStringCode(String currencyCode){
         return switch (currencyCode) {
-            case "USD" -> USD;
-            case "EUR" -> EUR;
-            default -> UNDEFINED;
+            case "USD" -> Currency.CurrencyName.USD;
+            case "EUR" -> Currency.CurrencyName.EUR;
+            default -> Currency.CurrencyName.UNDEFINED;
         };
     }
 
-    private CurrencyName getCurrencyNameByIntegerCode(int currencyCode) {
+    private Currency.CurrencyName getCurrencyNameByIntegerCode(int currencyCode) {
         return switch (currencyCode) {
-            case 840 -> USD;
-            case 978 -> EUR;
-            default -> UNDEFINED;
+            case 840 -> Currency.CurrencyName.USD;
+            case 978 -> Currency.CurrencyName.EUR;
+            default -> Currency.CurrencyName.UNDEFINED;
         };
     }
 }
